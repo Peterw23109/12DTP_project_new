@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title> something </title>
+</head>
+<body>
+    <div class= "grid" >
+       {% for group, blank in elements %}
+            <div class = "group">
+
+                {% for i in range(blank) %}
+                    <div class = "blank">
+
+    
+                    </div>
+                {% endfor %}
+            
+                {% for element in group %}
+                    {% if not (58 <= element['Atomic_number'] <= 71 or 90 <= element['Atomic_number'] <= 103) %}
+                        <div class = "element">
+                            <span class = "atomic">{{ element['Atomic_number'] }} </span>
+                            <span class = "name">{{ element['Element_name']}}</span>
+                            <span class = "atomic_mass">{{ element['Atomic_mass']}}</span>
+                        </div>
+                    {% endif %}
+                
+                    {% if 58 <= element['Atomic_number'] <= 71 %}
+                        <div class = "special"> 
+                            <span class = "atomic">{{ element['Atomic_number'] }} </span>
+                            <span class = "name">{{ element['Element_name']}}</span>
+                            <span class = "atomic_mass">{{ element['Atomic_mass']}}</span>
+                        </div>
+                    {% endif %}
+                    {% if 90 <= element['Atomic_number'] <= 103 %}
+                        <div class = "special">
+                            <span class = "atomic">{{ element['Atomic_number'] }} </span>
+                            <span class = "name">{{ element['Element_name']}}</span>
+                            <span class = "atomic_mass">{{ element['Atomic_mass']}}</span>
+                        </div>
+                    {% endif %}
+                    
+              
+            {% endfor %}
+            </div> 
+        {% endfor %}
+    </div>
+</body>
+</html>

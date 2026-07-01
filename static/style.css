@@ -1,0 +1,48 @@
+.grid {
+    display: grid;
+    grid-template-columns: repeat(18, 1fr);
+    gap: 6px;
+    width: 95%;
+    margin: auto;
+}
+.element {
+    border: 1px solid black;
+    background-color: #f1f1f1;
+    height: 80px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+}
+
+.atomic {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.name {
+    font-size: 10px;
+}
+
+.atomic_mass{
+    font-size: 8px;
+}
+.group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.blank{
+    visibility: hidden;
+    height: 80px;
+}
+.special{
+    display: grid;
+    grid-template-columns: repeat(15, 80px);
+    gap: 6px;
+    margin: 30px auto 0;
+    width: fit-content;
+}
