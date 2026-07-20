@@ -38,14 +38,18 @@ def index():
                             LEFT JOIN category ON Element.Category = category.id
                             WHERE Element.Group_number = ? 
                     """, (group_num,))
+        group.append((row, blank[group_num-1],))
+
+    category = query_db("""SELECT Element.*, category.category AS category_name
+                        FROM Element LEFT JOIN category ON Element.Category = category.id""")
 
             
-        group.append((row, blank[group_num-1]))
+        
   
      
 
         
-    return render_template('home.html',elements=group)
+    return render_template('home.html',elements=group, category=category)
 
 if __name__ == "__main__":
     app.run(debug=True)

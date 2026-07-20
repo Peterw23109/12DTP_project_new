@@ -5,6 +5,12 @@
     <title> something </title>
 </head>
 <body>
+    <div class = "search">
+        <form method="POST" action="">
+            <input type="text" name="element" placeholder="{{ invalid if invalid else 'Type element name' }}">
+            <button type="submit">search</button>
+        </form>
+    </div>
     <div class= "grid" >
        {% for group, blank in elements %}
             <div class = "group">
@@ -12,7 +18,7 @@
                 {% for i in range(blank) %}
                     <div class = "blank">
 
-    
+
                     </div>
                 {% endfor %}
             
@@ -20,30 +26,41 @@
                     {% if not (58 <= element['Atomic_number'] <= 71 or 90 <= element['Atomic_number'] <= 103) %}
                         <div class = "element">
                             <span class = "atomic">{{ element['Atomic_number'] }} </span>
-                            <span class = "name">{{ element['Element_name']}}</span>
+                            <span class = "name">{{ element['Symbol']}}</span>
                             <span class = "atomic_mass">{{ element['Atomic_mass']}}</span>
                         </div>
                     {% endif %}
-                
-                    {% if 58 <= element['Atomic_number'] <= 71 %}
-                        <div class = "special"> 
-                            <span class = "atomic">{{ element['Atomic_number'] }} </span>
-                            <span class = "name">{{ element['Element_name']}}</span>
-                            <span class = "atomic_mass">{{ element['Atomic_mass']}}</span>
-                        </div>
-                    {% endif %}
-                    {% if 90 <= element['Atomic_number'] <= 103 %}
-                        <div class = "special">
-                            <span class = "atomic">{{ element['Atomic_number'] }} </span>
-                            <span class = "name">{{ element['Element_name']}}</span>
-                            <span class = "atomic_mass">{{ element['Atomic_mass']}}</span>
-                        </div>
-                    {% endif %}
-                    
-              
-            {% endfor %}
+                {% endfor %}
             </div> 
         {% endfor %}
     </div>
+    <div class="special-grid">
+            {% for group, blank in elements %}
+                {% for element in group %}
+                    {% if 58 <= element['Atomic_number'] <= 71 %}
+                        <div class="special">
+                            <span class="atomic">{{ element['Atomic_number'] }}</span>
+                            <span class="name">{{ element['Symbol'] }}</span>
+                            <span class="atomic_mass">{{ element['Atomic_mass'] }}</span>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </div>
+
+         <div class="special-grid">
+            {% for group, blank in elements %}
+                {% for element in group %}
+                    {% if 90 <= element['Atomic_number'] <= 103 %}
+                        <div class="special">
+                            <span class="atomic">{{ element['Atomic_number'] }}</span>
+                            <span class="name">{{ element['Symbol'] }}</span>
+                            <span class="atomic_mass">{{ element['Atomic_mass'] }}</span>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </div>
+
 </body>
 </html>

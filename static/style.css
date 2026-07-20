@@ -24,14 +24,14 @@
 }
 
 .name {
-    font-size: 10px;
+    font-size: 16px;
 }
 
 .atomic_mass{
-    font-size: 8px;
+    font-size: 12px;
 }
 .group {
-    display: flex;
+    display: grid;
     flex-direction: column;
     gap: 6px;
 }
@@ -39,10 +39,25 @@
     visibility: hidden;
     height: 80px;
 }
-.special{
+.special-grid {
     display: grid;
     grid-template-columns: repeat(15, 80px);
     gap: 6px;
     margin: 30px auto 0;
     width: fit-content;
+}
+
+.special {
+    border: 1px solid black;
+    height: 80px;
+    background-color: #f1f1f1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.search{
+    display: flex;
+    justify-content: center; 
+    align-items: center;     
 }
