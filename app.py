@@ -23,7 +23,23 @@ def query_db(query, args=(), one=False):
     cur.close()
     return (rv[0] if rv else None) if one else rv
 
-@app.route('/')
+def get_groups():
+    group = []
+    blank = [0,1,3,3,3,3,3,3,3,3,3,3,1,1,1,1,1,0]
+
+    for group_num in range(1, 19):
+        row = query_db("""
+            SELECT Element.*, state.state AS state_name, category.category AS category_name
+            FROM Element
+            LEFT JOIN state ON Element.State = state.id
+            LEFT JOIN category ON Element.Category = category.id
+            WHERE Element.Group_number = ?
+        """, (group_num,))
+        group.append((row, blank[group_num-1]))
+
+    return group
+
+@app.route('/index')
 def index():
 
     group = []
@@ -39,17 +55,23 @@ def index():
                             WHERE Element.Group_number = ? 
                     """, (group_num,))
         group.append((row, blank[group_num-1],))
-
     category = query_db("""SELECT Element.*, category.category AS category_name
                         FROM Element LEFT JOIN category ON Element.Category = category.id""")
-
-            
-        
-  
-     
-
-        
+    
     return render_template('home.html',elements=group, category=category)
+
+@app.route('/search', methods=["GET", "POST"])
+def search():
+    if request.method == "POST":
+        element_id = request.form.get("element")
+        target = query_db("""
+                    SELECT Element.*, state.state AS state_name, category.category AS category_name
+                    FROM Element
+                    LEFT JOIN state ON Element.State = state.id
+                    LEFT JOIN category ON Element.Category = category.id WHERE Element.Element_name = ? """, (element_id,), one=True)
+        return render_template('home.html', target=target)
+
+    
 
 if __name__ == "__main__":
     app.run(debug=True)

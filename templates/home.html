@@ -6,7 +6,7 @@
 </head>
 <body>
     <div class = "search">
-        <form method="POST" action="">
+        <form method="POST" action= "{{ url_for('search') }}">
             <input type="text" name="element" placeholder="{{ invalid if invalid else 'Type element name' }}">
             <button type="submit">search</button>
         </form>
@@ -61,6 +61,13 @@
                 {% endfor %}
             {% endfor %}
         </div>
+        {% if target %}
+            <div class = "highlight">
+                <span class="atomic">{{ element['Atomic_number'] }}</span>
+                <span class="name">{{ element['Symbol'] }}</span>
+                <span class="atomic_mass">{{ element['Atomic_mass'] }}</span>
+            </div>
+        {% endif %}
 
 </body>
 </html>
