@@ -33,35 +33,15 @@ def get_groups():
             FROM Element
             LEFT JOIN state ON Element.State = state.id
             LEFT JOIN category ON Element.Category = category.id
-            WHERE Element.Group_number = ?
+            WHERE Element.Group_number = ? COLLATE NOCASE
         """, (group_num,))
         group.append((row, blank[group_num-1]))
 
     return group
 
-@app.route('/index')
-def index():
-
-    group = []
-    # how many blank is there each column
-    blank = [0,1,3,3,3,3,3,3,3,3,3,3,1,1,1,1,1,0]
-    
-    #add each element into the list and sending the number of blank in each gro
-    for group_num in range(1,19):
-        row = query_db(""" SELECT Element.*, state.state AS state_name, category.category AS category_name
-                            FROM Element
-                            LEFT JOIN state ON Element.State = state.id
-                            LEFT JOIN category ON Element.Category = category.id
-                            WHERE Element.Group_number = ? 
-                    """, (group_num,))
-        group.append((row, blank[group_num-1],))
-    category = query_db("""SELECT Element.*, category.category AS category_name
-                        FROM Element LEFT JOIN category ON Element.Category = category.id""")
-    
-    return render_template('home.html',elements=group, category=category)
-
-@app.route('/search', methods=["GET", "POST"])
-def search():
+@app.route('/table', methods=["GET","POST"])
+def table():
+    target = None
     if request.method == "POST":
         element_id = request.form.get("element")
         target = query_db("""
@@ -69,7 +49,54 @@ def search():
                     FROM Element
                     LEFT JOIN state ON Element.State = state.id
                     LEFT JOIN category ON Element.Category = category.id WHERE Element.Element_name = ? """, (element_id,), one=True)
-        return render_template('home.html', target=target)
+        
+    
+    return render_template('table.html',elements=get_groups(),target=target)
+
+@app.route('/', methods=["GET", "POST"])
+def index():
+    return render_template('home.html')
+
+
+@app.route('/calc', methods = ["GET","POST"])
+def calc():
+    if request.method == "POST":
+        element_list = []
+        compound_name = request.form.get("compound")
+        print(compound_name)
+        i = 0
+        while i < len(compound_name):
+            i += 1
+            symbol = compound_name[i]
+            if i < len(compound_name) and compound_name[i].islower():
+                symbol += compound_name[i]
+                i += 1
+            number = ""
+            while i < len(compound_name) and compound_name[i].isdigit():
+                
+                number += compound_name[i]
+                i += 1
+
+            if number == "":
+                count = 1
+            else:
+                count = int(number)
+
+            element_list.append((symbol, count))
+
+        print(element_list)
+        for symbol, count in element_list:
+            element = query_db(
+                "SELECT Atomic_mass FROM Element WHERE Symbol = ?",
+                (symbol,),
+                one=True
+            )
+
+            if element:
+                molar_mass += element["Atomic_mass"] * count
+ 
+    return render_template('gmolcalc.html')
+
 
     
 
