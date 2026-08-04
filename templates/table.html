@@ -26,20 +26,13 @@
             
                 {% for element in group %}
                     {% if not (58 <= element['Atomic_number'] <= 71 or 90 <= element['Atomic_number'] <= 103) %}
-                        <div class = "element">
+                        <div class = "element {% if target and target['Atomic_number'] == element['Atomic_number']%}highlight{% endif %}">
                             <span class = "atomic">{{ element['Atomic_number'] }} </span>
                             <span class = "name">{{ element['Symbol']}}</span>
                             <span class = "atomic_mass">{{ element['Atomic_mass']}}</span>
                         </div>
                     {% endif %}
                 {% endfor %}
-                {% if target %}
-                <div class = "highlight">
-                    <span class="atomic">{{ element['Atomic_number'] }}</span>
-                    <span class="name">{{ element['Symbol'] }}</span>
-                    <span class="atomic_mass">{{ element['Atomic_mass'] }}</span>
-                </div>
-                {% endif %}
             </div> 
         {% endfor %}
     </div>
@@ -69,7 +62,6 @@
                     {% endif %}
                 {% endfor %}
             {% endfor %}
-
 
 
         </div>

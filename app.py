@@ -66,7 +66,7 @@ def index():
 
 
 
-"""def calc():
+def calc():
 
     if request.method == "POST":
         element_list = []
@@ -98,7 +98,7 @@ def index():
                 molar_mass += element["Atomic_mass"] * count
  
     return render_template('gmolcalc.html', molar_mass = molar_mass)
-"""
+
 
     
 
