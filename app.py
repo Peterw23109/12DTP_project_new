@@ -45,7 +45,7 @@ def get_groups():
 def table():
     target = None
     if request.method == "POST":
-        element_id = request.form.get("element")
+        element_id = request.form.get("element").title()
         target = query_db("""
                     SELECT Element.*, state.state AS state_name, category.category AS category_name
                     FROM Element
