@@ -24,9 +24,11 @@ def query_db(query, args=(), one=False):
     return (rv[0] if rv else None) if one else rv
 
 def get_groups():
+    #how many blank are in each row
     group = []
     blank = [0,1,3,3,3,3,3,3,3,3,3,3,1,1,1,1,1,0]
 
+    # giving the data of each row and adding row and blank into the list
     for group_num in range(1, 19):
         row = query_db("""
             SELECT Element.*, state.state AS state_name, category.category AS category_name
@@ -34,7 +36,7 @@ def get_groups():
             LEFT JOIN state ON Element.State = state.id
             LEFT JOIN category ON Element.Category = category.id
             WHERE Element.Group_number = ? COLLATE NOCASE
-        """, (group_num,))
+        """, (group_num,)) 
         group.append((row, blank[group_num-1]))
 
     return group
@@ -59,7 +61,13 @@ def index():
 
 
 @app.route('/calc', methods = ["GET","POST"])
-def calc():
+
+
+
+
+
+"""def calc():
+
     if request.method == "POST":
         element_list = []
         compound_name = request.form.get("compound")
@@ -71,16 +79,10 @@ def calc():
             if i < len(compound_name) and compound_name[i].islower():
                 symbol += compound_name[i]
                 i += 1
-            number = ""
-            while i < len(compound_name) and compound_name[i].isdigit():
-                
-                number += compound_name[i]
-                i += 1
+            number = ""                     
 
-            if number == "":
-                count = 1
-            else:
-                count = int(number)
+
+
 
             element_list.append((symbol, count))
 
@@ -95,8 +97,8 @@ def calc():
             if element:
                 molar_mass += element["Atomic_mass"] * count
  
-    return render_template('gmolcalc.html')
-
+    return render_template('gmolcalc.html', molar_mass = molar_mass)
+"""
 
     
 

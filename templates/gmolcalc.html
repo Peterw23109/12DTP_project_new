@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title> something </title>
+</head>
+<body>
+    <div class = "search">
+        <div>
+            <form method="POST" action= "{{ url_for('calc') }}">
+                <input type="text" name="compound" placeholder="{{ invalid if invalid else 'Type element name' }}">
+                <button type="submit">calculate</button>
+            </form>
+        </div>
+    </div>
+    {% if molar_mass is not none %}
+        <h2>Molar Mass: {{ molar_mass }} g/mol</h2>
+    {% endif %}
+    
+
+
+</body>
+</html>
