@@ -8,12 +8,9 @@
     <div class = "search">
         <search>
             <form method="POST" action= "{{ url_for('table') }}">
-                <input type="text" name="element" placeholder="{{ invalid if invalid else 'Type element name' }}">
+                <input type="text" name="element" placeholder="{{ invaild if invaild else 'Type element name' }}">
                 <button type="submit">search</button>
             </form>
-            {% if error_message %}
-                <p>{{ error_message }}</p>
-            {% endif %}
         </search>
     </div>
     <div class= "grid" >

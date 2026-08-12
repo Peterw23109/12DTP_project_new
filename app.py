@@ -55,7 +55,7 @@ def table():
         
     if target == None:
         invaild = "Invaild element"
-    return render_template('table.html',elements=get_groups(),target=target, error_message = invaild)
+    return render_template('table.html',elements=get_groups(),target=target, invaild = invaild)
 
 @app.route('/', methods=["GET", "POST"])
 def index():
