@@ -43,6 +43,7 @@ def get_groups():
 
 @app.route('/table', methods=["GET","POST"])
 def table():
+
     target = None
     invaild = None
     if request.method == "POST":
@@ -53,8 +54,8 @@ def table():
                     LEFT JOIN state ON Element.State = state.id
                     LEFT JOIN category ON Element.Category = category.id WHERE Element.Element_name = ? """, (element_id,), one=True)
         
-    if target == None:
-        invaild = "Invaild element"
+        if target == None:
+            invaild = "Invaild element"
     return render_template('table.html',elements=get_groups(),target=target, invaild = invaild)
 
 @app.route('/', methods=["GET", "POST"])
