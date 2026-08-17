@@ -13,6 +13,7 @@
             </form>
         </search>
     </div>
+
     <div class= "grid" >
        {% for group, blank in elements %}
             <div class = "group">
@@ -26,13 +27,17 @@
             
                 {% for element in group %}
                     {% if not (58 <= element['Atomic_number'] <= 71 or 90 <= element['Atomic_number'] <= 103) %}
-                        <div class = "element {% if target and target['Atomic_number'] == element['Atomic_number']%}highlight{% endif %}">
-                            <span class = "atomic">{{ element['Atomic_number'] }} </span>
-                            <span class = "name">{{ element['Symbol']}}</span>
-                            <span class = "atomic_mass">{{ element['Atomic_mass']}}</span>
-                        </div>
+                        <form method="POST" action="{{ url_for('table') }}">
+                            <input type="hidden" name="element" value="{{ element['Element_name'] }}">
+                                <button type="submit" class = "element {% if target and target['Atomic_number'] == element['Atomic_number']%}highlight{% endif %}">
+                                        <span class = "atomic">{{ element['Atomic_number'] }} </span>
+                                        <span class = "name">{{ element['Symbol']}}</span>
+                                        <span class = "atomic_mass">{{ element['Atomic_mass']}}</span>
+                                </button>
+                            </form>
                     {% endif %}
                 {% endfor %}
+                
             </div> 
         {% endfor %}
     </div>
