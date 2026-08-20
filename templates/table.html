@@ -51,8 +51,8 @@
     </div>
     <div class="special-grid">
        
-            {% for group, blank in elements %}
-                {% for element in group %}
+
+                {% for element in special_elements %}
                     {% if 58 <= element['Atomic_number'] <= 71 %}
                     <div class="element-container">
                         <form method="POST" action="{{ url_for('table') }}">
@@ -88,12 +88,9 @@
                 
                     {% endif %}
                 {% endfor %}
-            {% endfor %}
         </div>
     <div class=" special-grid">
-        
-            {% for group, blank in elements %}
-                {% for element in group %}
+                {% for element in special_elements %}
                     {% if 90 <= element['Atomic_number'] <= 103 %}
                     <div class="element-container">
                         <form method="POST" action="{{ url_for('table') }}">
@@ -128,7 +125,6 @@
                     </div>
                     {% endif %}
                 {% endfor %}
-            {% endfor %}
         </div>
     </div>
 </body>

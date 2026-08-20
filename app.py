@@ -36,10 +36,24 @@ def get_groups():
             LEFT JOIN state ON Element.State = state.id
             LEFT JOIN category ON Element.Category = category.id
             WHERE Element.Group_number = ? COLLATE NOCASE
+            ORDER BY Element.Atomic_number
         """, (group_num,)) 
         group.append((row, blank[group_num-1]))
 
     return group
+
+def get_special_elements():
+    return query_db("""
+        SELECT Element.*, 
+               state.state AS state_name, 
+               category.category AS category_name
+        FROM Element
+        LEFT JOIN state ON Element.State = state.id
+        LEFT JOIN category ON Element.Category = category.id
+        WHERE Element.Atomic_number BETWEEN 58 AND 71
+           OR Element.Atomic_number BETWEEN 90 AND 103
+        ORDER BY Element.Atomic_number
+    """)
 
 @app.route('/table', methods=["GET","POST"])
 def table():
@@ -56,7 +70,7 @@ def table():
         
         if target == None:
             invaild = "Invaild element"
-    return render_template('table.html',elements=get_groups(),target=target, invaild = invaild)
+    return render_template('table.html',elements=get_groups(),target=target, invaild = invaild,special_elements=get_special_elements(),)
 
 @app.route('/', methods=["GET", "POST"])
 def index():
