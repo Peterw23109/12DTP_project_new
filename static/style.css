@@ -62,12 +62,16 @@
 .special {
     border: 1px solid black;
     height: 80px;
+    width: 80px;
     background-color: #f1f1f1;
 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    cursor: pointer;
+    box-sizing: border-box;
 }
 
 .search {
@@ -131,4 +135,18 @@
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 
     text-align: left;
+}
+
+.error-message {
+    color: red;
+    margin: 5px 0;
+    font-weight: bold;
+}
+
+.search input::placeholder {
+    color: black;
+}
+
+.search input.invalid-input::placeholder {
+    color: red;
 }
