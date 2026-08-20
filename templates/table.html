@@ -57,7 +57,7 @@
                     <div class="element-container">
                         <form method="POST" action="{{ url_for('table') }}">
                             <input type="hidden" name="element" value="{{ element['Element_name'] }}">
-                            <button type = "submit" class="special">
+                            <button type = "submit" class="special {% if target and target['Atomic_number'] == element['Atomic_number'] %}highlight{% endif %}">
                                 <span class="atomic">{{ element['Atomic_number'] }}</span>
                                 <span class="name">{{ element['Symbol'] }}</span>
                                 <span class="atomic_mass">{{ element['Atomic_mass'] }}</span>
@@ -95,7 +95,7 @@
                     <div class="element-container">
                         <form method="POST" action="{{ url_for('table') }}">
                             <input type="hidden" name="element" value="{{ element['Element_name'] }}">
-                            <button type = "submit" class="special">
+                            <button type = "submit" class="special {% if target and target['Atomic_number'] == element['Atomic_number'] %}highlight{% endif %}">
                                 <span class="atomic">{{ element['Atomic_number'] }}</span>
                                 <span class="name">{{ element['Symbol'] }}</span>
                                 <span class="atomic_mass">{{ element['Atomic_mass'] }}</span>
