@@ -50,18 +50,44 @@
         {% endfor %}
     </div>
     <div class="special-grid">
+        <div class="element-container"></div>
             {% for group, blank in elements %}
                 {% for element in group %}
                     {% if 58 <= element['Atomic_number'] <= 71 %}
-                        <div class="special">
+                    <form method="POST" action="{{ url_for('table') }}">
+                        <button type = "submit" class="special">
                             <span class="atomic">{{ element['Atomic_number'] }}</span>
                             <span class="name">{{ element['Symbol'] }}</span>
                             <span class="atomic_mass">{{ element['Atomic_mass'] }}</span>
-                        </div>
+                        </button>
+                    </form>
+                    <div class="element-info">
+                        <h2>{{ element['Element_name'] }}</h2>
+
+                        <p><strong>Symbol:</strong> {{ element['Symbol'] }}</p>
+
+                        <p><strong>Atomic Number:</strong> 
+                            {{ element['Atomic_number'] }}
+                        </p>
+
+                        <p><strong>Atomic Mass:</strong> 
+                            {{ element['Atomic_mass'] }}
+                        </p>
+
+                        <p><strong>State:</strong> 
+                            {{ element['state_name'] }}
+                        </p>
+
+                        <p><strong>Category:</strong> 
+                            {{ element['category_name'] }}
+                        </p>
+                    </div>
+                
                     {% endif %}
                 {% endfor %}
             {% endfor %}
         </div>
+    </div>
          <div class="special-grid">
             {% for group, blank in elements %}
                 {% for element in group %}
