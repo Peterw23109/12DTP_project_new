@@ -8,7 +8,10 @@
     <div class = "search">
         <search>
             <form method="POST" action= "{{ url_for('table') }}">
-                <input type="text" name="element" placeholder="{{ invaild if invaild else 'Type element name' }}" minlength="4" maxlength="10">
+                <input type="text" name="element" placeholder="Type element name" minlength="4" maxlength="10">
+                {% if invaild %}
+                    <p class="error-message">{{ invaild }}</p>
+                {% endif %}
                 <button type="submit">search</button>
             </form>
         </search>
@@ -45,7 +48,7 @@
                                 </div>
                         </div>
                     {% endif %}
-                {% endfor % }      
+                {% endfor %}      
             </div> 
         {% endfor %}
     </div>
