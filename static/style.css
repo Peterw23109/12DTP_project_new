@@ -81,7 +81,7 @@
     margin-bottom: 20px;
 }
 
-/* Element selected/highlighted */
+
 .highlight {
     border: 3px solid #ffd700;
     background-color: #fff8c6;
@@ -118,7 +118,7 @@
 
 .element-info {
     display: none;
-    position: absolute;
+    position: fixed;
 
     z-index: 1000;
 
