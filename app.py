@@ -68,8 +68,16 @@ def table():
                     LEFT JOIN state ON Element.State = state.id
                     LEFT JOIN category ON Element.Category = category.id WHERE Element.Element_name = ? """, (element_id,), one=True)
         
-        if target == None:
-            invaild = "Invaild element"
+        
+        if not target:
+            target = query_db(""" SELECT Element.*, state.state AS state_name, category.category AS category_name
+                                FROM Element
+                                LEFT JOIN state ON Element.State = state.id
+                                LEFT JOIN category ON Element.Category = category.id WHERE Element.Symbol = ? """, (element_id,), one=True)
+            if not target:
+                invaild = "Invaild element"
+        
+            
     return render_template('table.html',elements=get_groups(),target=target, invaild = invaild,special_elements=get_special_elements(),)
 
 @app.route('/', methods=["GET", "POST"])

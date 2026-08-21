@@ -8,7 +8,7 @@
     <div class = "search">
         <search>
             <form method="POST" action= "{{ url_for('table') }}">
-                <input type="text" name="element" placeholder="{{ invaild if invaild else 'Type element name' }}" class = "{% if invaild %}invalid-input{% endif %}" minlength="4" maxlength="10">
+                <input type="text" name="element" placeholder="{{ invaild if invaild else 'Type element name' }}" class = "{% if invaild %}invalid-input{% endif %}" maxlength="10">
                 <button type="submit">search</button>
             </form>
         </search>
@@ -51,7 +51,7 @@
     </div>
     <div class="special-grid">
        
-
+    
                 {% for element in special_elements %}
                     {% if 58 <= element['Atomic_number'] <= 71 %}
                     <div class="element-container">
