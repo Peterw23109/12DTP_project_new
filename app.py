@@ -61,7 +61,7 @@ def table():
     target = None
     invaild = None
     if request.method == "POST":
-        element_id = request.form.get("element").title()
+        element_id = request.form.get("element").title().strip()
         target = query_db("""
                     SELECT Element.*, state.state AS state_name, category.category AS category_name
                     FROM Element
