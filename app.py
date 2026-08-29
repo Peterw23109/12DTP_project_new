@@ -16,7 +16,8 @@ def close_connection(exception):
     db = getattr(g, '_database', None)
     if db is not None:
         db.close()
-        
+
+#connect the database
 def query_db(query, args=(), one=False):
     cur = get_db().execute(query, args)
     rv = cur.fetchall()
@@ -38,10 +39,12 @@ def get_groups():
             WHERE Element.Group_number = ? COLLATE NOCASE
             ORDER BY Element.Atomic_number
         """, (group_num,)) 
+        #add the element and number of blank space
         group.append((row, blank[group_num-1]))
 
     return group
 
+#this gets the special element from the database
 def get_special_elements():
     return query_db("""
         SELECT Element.*, 
@@ -58,22 +61,29 @@ def get_special_elements():
 @app.route('/table', methods=["GET","POST"])
 def table():
 
+    #no target and error message when intially loaded
     target = None
     invaild = None
+
     if request.method == "POST":
+
+        #get the element from the form
+
         element_id = request.form.get("element").title().strip()
+        #search the element in the database 
         target = query_db("""
                     SELECT Element.*, state.state AS state_name, category.category AS category_name
                     FROM Element
                     LEFT JOIN state ON Element.State = state.id
                     LEFT JOIN category ON Element.Category = category.id WHERE Element.Element_name = ? """, (element_id,), one=True)
         
-        
+        #if the element was not found find it in the element symbol 
         if not target:
             target = query_db(""" SELECT Element.*, state.state AS state_name, category.category AS category_name
                                 FROM Element
                                 LEFT JOIN state ON Element.State = state.id
                                 LEFT JOIN category ON Element.Category = category.id WHERE Element.Symbol = ? """, (element_id,), one=True)
+            #is not an element from teh database 
             if not target:
                 invaild = "Invaild element"
         
@@ -90,9 +100,9 @@ def index():
 
 
 
-
+#route to the molar mass calcuator page
 def calc():
-
+    #current doesn't work but working on it
     if request.method == "POST":
         element_list = []
         compound_name = request.form.get("compound")
