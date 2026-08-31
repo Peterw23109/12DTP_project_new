@@ -13,97 +13,112 @@
             </form>
         </search>
     </div>
+    {% if target %}
+        <div class="element-info">
+            <h2>{{ target['Element_name'] }} ({{ target['Symbol'] }})</h2>
+            <p><strong>Atomic Number:</strong> {{ target['Atomic_number'] }}</p>
+            <p><strong>Atomic Mass:</strong> {{ target['Atomic_mass'] }}</p>
+            <p><strong>State:</strong> {{ target['state_name'] }}</p>
+            <p><strong>Category:</strong> {{ target['category_name'] }}</p>
+            <p><strong>Boiling Point:</strong> {{ target['Boilingpoint'] }}</p>
+            <p><strong>Melting Point:</strong> {{ target['Meltingpoint'] }}</p>
+
+        </div>
+    {% endif %}
 
     <div class= "grid" >
-       {% for group, blank in elements %}
-            <div class = "group">
+        {% for Category in range(1,11) %}
+            {% for group, blank in elements %}
+                <div class = "group">
 
-                {% for i in range(blank) %}
-                    <div class = "blank">
+                    {% for i in range(blank) %}
+                        <div class = "blank">
 
-                    </div>
-                {% endfor %}
-            
-                {% for element in group %}
-                    {% if not (58 <= element['Atomic_number'] <= 71 or 90 <= element['Atomic_number'] <= 103) %}
-                        <div class = "element-container"> 
-                            <form method="POST" action="{{ url_for('table') }}">
-                                <input type="hidden" name="element" value="{{ element['Element_name'] }}">
-                                    <button type="submit" class = "element {% if target and target['Atomic_number'] == element['Atomic_number']%}highlight{% endif %}">
-                                            <span class = "atomic">{{ element['Atomic_number'] }} </span>
-                                            <span class = "name">{{ element['Symbol']}}</span>
-                                            <span class = "atomic_mass">{{ element['Atomic_mass']}}</span>
-                                    </button>
-                                </form>
-                                <div class="element-info">
-                                    <h2>{{ element['Element_name'] }}</h2>
-                                    <p><strong>Symbol:</strong> {{ element['Symbol'] }}</p>
-                                    <p><strong>Atomic Number:</strong> {{ element['Atomic_number'] }}</p>
-                                    <p><strong>Atomic Mass:</strong> {{ element['Atomic_mass'] }}</p>
-                                    <p><strong>State:</strong> {{ element['state_name'] }}</p>
-                                    <p><strong>Category:</strong> {{ element['category_name'] }}</p>
-                                    <p><strong>Boiling point:</strong> 
-                                        {{ element['Boilingpoint'] }}
-                                    </p>
-                                    <p><strong>Melting point:</strong> 
-                                        {{ element['Meltingpoint'] }}
-                                    </p>
-                                </div>
                         </div>
-                    {% endif %}
-                {% endfor %}      
-            </div> 
+                    {% endfor %}
+                
+                    {% for element in group %}
+                        {% if not (58 <= element['Atomic_number'] <= 71 or 90 <= element['Atomic_number'] <= 103) %}
+                            <div class="element-container category-{{ element['Category'] }}">
+                                <form method="POST" action="{{ url_for('table') }}">
+                                    <input type="hidden" name="element" value="{{ element['Element_name'] }}">
+                                        <button type="submit" class = "element {% if target and target['Atomic_number'] == element['Atomic_number']%}highlight{% endif %}">
+                                                <span class = "atomic">{{ element['Atomic_number'] }} </span>
+                                                <span class = "name">{{ element['Symbol']}}</span>
+                                                <span class = "atomic_mass">{{ element['Atomic_mass']}}</span>
+                                        </button>
+                                    </form>
+                                    <div class="element-info">
+                                        <h2>{{ element['Element_name'] }}</h2>
+                                        <p><strong>Symbol:</strong> {{ element['Symbol'] }}</p>
+                                        <p><strong>Atomic Number:</strong> {{ element['Atomic_number'] }}</p>
+                                        <p><strong>Atomic Mass:</strong> {{ element['Atomic_mass'] }}</p>
+                                        <p><strong>State:</strong> {{ element['state_name'] }}</p>
+                                        <p><strong>Category:</strong> {{ element['category_name'] }}</p>
+                                        <p><strong>Boiling point:</strong> 
+                                            {{ element['Boilingpoint'] }}
+                                        </p>
+                                        <p><strong>Melting point:</strong> 
+                                            {{ element['Meltingpoint'] }}
+                                        </p>
+                                    </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}      
+                </div> 
+            {% endfor %}
         {% endfor %}
     </div>
     <div class="special-grid">
-       
-                {% for element in special_elements %}
-                    {% if 58 <= element['Atomic_number'] <= 71 %}
-                    <div class="element-container">
-                        <form method="POST" action="{{ url_for('table') }}">
-                            <input type="hidden" name="element" value="{{ element['Element_name'] }}">
-                            <button type = "submit" class="special {% if target and target['Atomic_number'] == element['Atomic_number'] %}highlight{% endif %}">
-                                <span class="atomic">{{ element['Atomic_number'] }}</span>
-                                <span class="name">{{ element['Symbol'] }}</span>
-                                <span class="atomic_mass">{{ element['Atomic_mass'] }}</span>
-                            </button>
-                        </form>
-                        <div class="element-info">
-                            <h2>{{ element['Element_name'] }}</h2>
+                {% for Category in range(1,11) %}
+                    {% for element in special_elements %}
+                        {% if 58 <= element['Atomic_number'] <= 71 %}
+                        <div class="element-container category-{{ element['Category'] }}">
+                            <form method="POST" action="{{ url_for('table') }}">
+                                <input type="hidden" name="element" value="{{ element['Element_name'] }}">
+                                <button type = "submit" class="special {% if target and target['Atomic_number'] == element['Atomic_number'] %}highlight{% endif %}">
+                                    <span class="atomic">{{ element['Atomic_number'] }}</span>
+                                    <span class="name">{{ element['Symbol'] }}</span>
+                                    <span class="atomic_mass">{{ element['Atomic_mass'] }}</span>
+                                </button>
+                            </form>
+                            <div class="element-info">
+                                <h2>{{ element['Element_name'] }}</h2>
 
-                            <p><strong>Symbol:</strong> {{ element['Symbol'] }}</p>
+                                <p><strong>Symbol:</strong> {{ element['Symbol'] }}</p>
 
-                            <p><strong>Atomic Number:</strong> 
-                                {{ element['Atomic_number'] }}
-                            </p>
+                                <p><strong>Atomic Number:</strong> 
+                                    {{ element['Atomic_number'] }}
+                                </p>
 
-                            <p><strong>Atomic Mass:</strong> 
-                                {{ element['Atomic_mass'] }}
-                            </p>
+                                <p><strong>Atomic Mass:</strong> 
+                                    {{ element['Atomic_mass'] }}
+                                </p>
 
-                            <p><strong>State:</strong> 
-                                {{ element['state_name'] }}
-                            </p>
+                                <p><strong>State:</strong> 
+                                    {{ element['state_name'] }}
+                                </p>
 
-                            <p><strong>Category:</strong> 
-                                {{ element['category_name'] }}
-                            </p>
-                            <p><strong>Boiling point:</strong> 
-                                {{ element['Boilingpoint'] }}
-                            </p>
-                            <p><strong>Melting point:</strong> 
-                                {{ element['Meltingpoint'] }}
-                            </p>
+                                <p><strong>Category:</strong> 
+                                    {{ element['category_name'] }}
+                                </p>
+                                <p><strong>Boiling point:</strong> 
+                                    {{ element['Boilingpoint'] }}
+                                </p>
+                                <p><strong>Melting point:</strong> 
+                                    {{ element['Meltingpoint'] }}
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                
-                    {% endif %}
+                        {% endif %}
+                    {% endfor %}
                 {% endfor %}
         </div>
     <div class=" special-grid">
+            {% for Category in range(1,11) %}
                 {% for element in special_elements %}
                     {% if 90 <= element['Atomic_number'] <= 103 %}
-                    <div class="element-container">
+                    <div class="element-container category-{{ element['Category'] }}">
                         <form method="POST" action="{{ url_for('table') }}">
                             <input type="hidden" name="element" value="{{ element['Element_name'] }}">
                             <button type = "submit" class="special {% if target and target['Atomic_number'] == element['Atomic_number'] %}highlight{% endif %}">
@@ -142,6 +157,7 @@
                     </div>
                     {% endif %}
                 {% endfor %}
+            {% endfor %}
         </div>
     </div>
 </body>

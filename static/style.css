@@ -150,3 +150,43 @@
 .search input.invalid-input::placeholder {
     color: red;
 }
+
+.category-1 .element {
+    background-color: #ffcccc;
+}
+
+.category-2 .element {
+    background-color: #ccffcc;
+}
+
+.category-3 .element {
+    background-color: #ccccff;
+}
+
+.category-4 .element {
+    background-color: #ffffcc;
+}
+
+.category-5 .element {
+    background-color: #ffccff;
+}
+
+.category-6 .element {
+    background-color: #ccffff;
+}
+
+.category-7 .element {
+    background-color: #ffd9b3;
+}
+
+.category-8 .element {
+    background-color: #d9b3ff;
+}
+
+.category-9 .element {
+    background-color: #b3e6cc;
+}
+
+.category-10 .element {
+    background-color: #e6b3b3;
+}
