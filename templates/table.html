@@ -27,7 +27,6 @@
     {% endif %}
 
     <div class= "grid" >
-        {% for Category in range(1,11) %}
             {% for group, blank in elements %}
                 <div class = "group">
 
@@ -67,10 +66,8 @@
                     {% endfor %}      
                 </div> 
             {% endfor %}
-        {% endfor %}
     </div>
     <div class="special-grid">
-                {% for Category in range(1,11) %}
                     {% for element in special_elements %}
                         {% if 58 <= element['Atomic_number'] <= 71 %}
                         <div class="element-container category-{{ element['Category'] }}">
@@ -112,10 +109,8 @@
                         </div>
                         {% endif %}
                     {% endfor %}
-                {% endfor %}
         </div>
     <div class=" special-grid">
-            {% for Category in range(1,11) %}
                 {% for element in special_elements %}
                     {% if 90 <= element['Atomic_number'] <= 103 %}
                     <div class="element-container category-{{ element['Category'] }}">
@@ -157,7 +152,6 @@
                     </div>
                     {% endif %}
                 {% endfor %}
-            {% endfor %}
         </div>
     </div>
 </body>

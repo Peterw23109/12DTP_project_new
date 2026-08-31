@@ -151,42 +151,52 @@
     color: red;
 }
 
-.category-1 .element {
+.category-1 .element,
+.category-1 .special {
     background-color: #ffcccc;
 }
 
-.category-2 .element {
+.category-2 .element,
+.category-2 .special {
     background-color: #ccffcc;
 }
 
-.category-3 .element {
+.category-3 .element,
+.category-1 .special {
     background-color: #ccccff;
 }
 
-.category-4 .element {
+.category-4 .element,
+.category-4 .special {
     background-color: #ffffcc;
 }
 
-.category-5 .element {
+.category-5 .element,
+.category-5 .special {
     background-color: #ffccff;
 }
 
-.category-6 .element {
+.category-6 .element,
+.category-6 .special {
     background-color: #ccffff;
 }
 
-.category-7 .element {
+.category-7 .element,
+.category-7 .special {
     background-color: #ffd9b3;
 }
 
-.category-8 .element {
+.cat.egory-8 .element,
+.category-8 .special {
     background-color: #d9b3ff;
 }
 
-.category-9 .element {
+.category-9 .element,
+.category-9 .special {
     background-color: #b3e6cc;
 }
 
-.category-10 .element {
+.category-10 .element,
+.category-10 .special {
     background-color: #e6b3b3;
 }
