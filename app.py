@@ -1,10 +1,16 @@
-from flask import Flask, g, render_template, request, session, redirect, url_for
+"""
+The app
+"""
+from flask import Flask, g, render_template, request
 import sqlite3
 
 DATABASE = 'element.db'
 app = Flask(__name__)
 
 def get_db():
+    """
+    It get the data from the database
+    """
     db = getattr(g, '_database', None)
     if db is None:
         db = g._database = sqlite3.connect(DATABASE)
@@ -13,18 +19,26 @@ def get_db():
 
 @app.teardown_appcontext
 def close_connection(exception):
+    """
+    It closes the connection
+    """
     db = getattr(g, '_database', None)
     if db is not None:
         db.close()
 
-#connect the database
 def query_db(query, args=(), one=False):
+    """
+    Register the page
+    """
     cur = get_db().execute(query, args)
     rv = cur.fetchall()
     cur.close()
     return (rv[0] if rv else None) if one else rv
 
 def get_groups():
+    """
+    It gets the group for the element
+    """
     #how many blank are in each row
     group = []
     blank = [0,1,3,3,3,3,3,3,3,3,3,3,1,1,1,1,1,0]
@@ -38,14 +52,16 @@ def get_groups():
             LEFT JOIN category ON Element.Category = category.id
             WHERE Element.Group_number = ? COLLATE NOCASE
             ORDER BY Element.Atomic_number
-        """, (group_num,)) 
+        """, (group_num,))
         #add the element and number of blank space
         group.append((row, blank[group_num-1]))
 
     return group
 
-#this gets the special element from the database
 def get_special_elements():
+    """
+    This gets the special element from the database
+    """
     return query_db("""
         SELECT Element.*, 
                state.state AS state_name, 
@@ -60,6 +76,9 @@ def get_special_elements():
 
 @app.route('/table', methods=["GET","POST"])
 def table():
+    """
+    The main page which display the perodic table
+    """
 
     #no target and error message when intially loaded
     target = None
@@ -70,28 +89,38 @@ def table():
         #get the element from the form
 
         element_id = request.form.get("element").title().strip()
-        #search the element in the database 
+        #search the element in the database
         target = query_db("""
-                    SELECT Element.*, state.state AS state_name, category.category AS category_name
-                    FROM Element
-                    LEFT JOIN state ON Element.State = state.id
-                    LEFT JOIN category ON Element.Category = category.id WHERE Element.Element_name = ? """, (element_id,), one=True)
-        
-        #if the element was not found find it in the element symbol 
+            SELECT Element.*,
+           state.state AS state_name,
+           category.category AS category_name
+            FROM Element
+            LEFT JOIN state ON Element.State = state.id
+            LEFT JOIN category ON Element.Category = category.id
+            WHERE Element.Element_name = ?
+            """, (element_id,), one=True)
+
+        #if the element was not found find it in the element symbol
         if not target:
-            target = query_db(""" SELECT Element.*, state.state AS state_name, category.category AS category_name
+            target = query_db(""" SELECT Element.*, state.state AS state_name,
+                                category.category AS category_name
                                 FROM Element
                                 LEFT JOIN state ON Element.State = state.id
-                                LEFT JOIN category ON Element.Category = category.id WHERE Element.Symbol = ? """, (element_id,), one=True)
-            #is not an element from teh database 
+                                LEFT JOIN category
+                                ON Element.Category = category.id WHERE Element.Symbol = ? """
+                                , (element_id,), one=True)
+            #is not an element from teh database
             if not target:
                 invaild = "Invaild element"
-        
-            
-    return render_template('table.html',elements=get_groups(),target=target, invaild = invaild,special_elements=get_special_elements(),)
+
+
+    return render_template('table.html',elements=get_groups(),target=target,invaild = invaild,special_elements=get_special_elements(),)
 
 @app.route('/', methods=["GET", "POST"])
 def index():
+    """
+    The home page
+    """
     return render_template('home.html')
 
 
@@ -102,6 +131,9 @@ def index():
 
 #route to the molar mass calcuator page
 def calc():
+    """
+    The molar mass calcuator 
+    """
     #current doesn't work but working on it
     if request.method == "POST":
         element_list = []
@@ -114,7 +146,7 @@ def calc():
             if i < len(compound_name) and compound_name[i].islower():
                 symbol += compound_name[i]
                 i += 1
-            number = ""                     
+            number = ""
 
 
 
@@ -131,11 +163,11 @@ def calc():
 
             if element:
                 molar_mass += element["Atomic_mass"] * count
- 
+
     return render_template('gmolcalc.html', molar_mass = molar_mass)
 
 
-    
+
 
 if __name__ == "__main__":
     app.run(debug=True)
